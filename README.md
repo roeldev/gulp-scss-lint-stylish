@@ -1,4 +1,4 @@
-#starter-project [![Build Status][travis-img]][travis-url]
+#gulp-scss-lint-stylish [![Build Status][travis-img]][travis-url]
 **Stylish reporter for gulp-scss-lint, following the visual style of jshint-stylish**
 
 
