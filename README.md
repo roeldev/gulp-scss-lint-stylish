@@ -1,4 +1,4 @@
-#gulp-scss-lint-stylish [![Build Status][travis-img]][travis-url]
+#gulp-scss-lint-stylish [![NPM version][npm-img]][npm-url] [![Build Status][travis-img]][travis-url] [![Dependency Status][david-img]][david-url]
 **Stylish reporter for [gulp-scss-lint][gulp-scss-lint-url], following the visual style of [jshint-stylish][jshint-stylish-url]**
 
 
@@ -20,7 +20,12 @@ gulp.task('scss-lint', function()
 });
 ```
 
+[npm-img]: https://badge.fury.io/js/gulp-scss-lint-stylish.svg
+[npm-url]: https://www.npmjs.com/package/gulp-scss-lint-stylish
 [travis-img]: https://travis-ci.org/roeldev/gulp-scss-lint-stylish.svg?branch=master
 [travis-url]: https://travis-ci.org/roeldev/gulp-scss-lint-stylish
+[david-img]: https://david-dm.org/roeldev/gulp-scss-lint-stylish.svg
+[david-url]: https://david-dm.org/roeldev/gulp-scss-lint-stylish
+
 [gulp-scss-lint-url]: https://github.com/juanfran/gulp-scss-lint
 [jshint-stylish-url]: https://github.com/sindresorhus/jshint-stylish
