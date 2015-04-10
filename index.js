@@ -8,20 +8,21 @@ var _          = require('underscore'),
 
 ////////////////////////////////////////////////////////////////////////////////
 
-function reason($str, $color1, $color2)
+function colorize($str, $color1, $color2)
 {
     var $matches = $str.split(/(`[^`]+`)/g),
-        $match,
-        $str     = [];
+        $match;
 
     if ($matches)
     {
+        $str = [];
+
         for(var $i = 0, $iL = $matches.length; $i < $iL; $i++)
         {
             $match = $matches[$i];
-            $match = (($match.substr(0, 1) === '`')
-                ? $color2($match)
-                : $color1($match));
+            $match = (($match.substr(0, 1) === '`') ?
+                      $color2($match) :
+                      $color1($match));
 
             $str.push($match);
         }
@@ -69,9 +70,9 @@ module.exports = function($file)
         else
         {
             $warningCount++;
-            $reason = (IS_WIN
-                ? reason($reason, Chalk.cyan, Chalk.blue)
-                : reason($reason, Chalk.blue, Chalk.cyan));
+            $reason = (IS_WIN ?
+                colorize($reason, Chalk.cyan, Chalk.blue) :
+                colorize($reason, Chalk.blue, Chalk.cyan));
         }
 
         $log.push(
@@ -86,7 +87,7 @@ module.exports = function($file)
     if ($log.length >= 1)
     {
         console.log('');
-        console.log($file.path);
+        console.log(Chalk.underline($file.path));
         console.log(TextTable($log));
         console.log('');
 

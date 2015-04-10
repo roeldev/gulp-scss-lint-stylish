@@ -1,0 +1,27 @@
+{
+    "curly": true,
+    "eqeqeq": true,
+    "forin": true,
+    "freeze": true,
+    "funcscope": true,
+    "futurehostile": true,
+    "indent": 4,
+    "latedef": true,
+    "maxdepth": 3,
+    "newcap": false,
+    "noarg": true,
+    "nocomma": true,
+    "nonbsp": true,
+    "quotmark": "single",
+    "undef": true,
+    "unused": true,
+
+    "eqnull": true,
+    "laxcomma": false,
+    "strict": true,
+    "validthis": true,
+
+    "devel": true,
+    "mocha": true,
+    "node": true
+}
