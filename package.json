@@ -1,0 +1,38 @@
+{
+  "title": "gulp-scss-lint-stylish",
+  "name": "gulp-scss-lint-stylish",
+  "homepage": "https://github.com/roeldev/gulp-scss-lint-stylish",
+  "description": "Stylish reporter for gulp-scss-lint, following the visual style of jshint-stylish",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roeldev/gulp-scss-lint-stylish.git"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "dependencies": {
+    "chalk": "^1.0.0",
+    "log-symbols": "^1.0.0",
+    "text-table": "^0.2.0"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "jshint": "^2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "gulpfriendly",
+    "gulp-scss-lint",
+    "scss-lint",
+    "reporter",
+    "lint",
+    "validate",
+    "stylish",
+    "elegant"
+  ]
+}
