@@ -16,11 +16,14 @@
   "dependencies": {
     "chalk": "^1.0.0",
     "log-symbols": "^1.0.0",
-    "text-table": "^0.2.0"
+    "text-table": "^0.2.0",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "mocha": "*",
-    "jshint": "^2"
+    "gulp-scss-lint": "^0.1.11",
+    "gulp-util": "^3.0.4",
+    "jshint": "^2",
+    "mocha": "*"
   },
   "scripts": {
     "test": "mocha"
