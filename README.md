@@ -1,5 +1,5 @@
 #gulp-scss-lint-stylish [![Build Status][travis-img]][travis-url]
-**Stylish reporter for gulp-scss-lint, following the visual style of jshint-stylish**
+**Stylish reporter for [gulp-scss-lint][gulp-scss-lint-url], following the visual style of [jshint-stylish][jshint-stylish-url]**
 
 
 ## Install
@@ -22,3 +22,5 @@ gulp.task('scss-lint', function()
 
 [travis-img]: https://travis-ci.org/roeldev/gulp-scss-lint-stylish.svg?branch=master
 [travis-url]: https://travis-ci.org/roeldev/gulp-scss-lint-stylish
+[gulp-scss-lint-url]: https://github.com/juanfran/gulp-scss-lint
+[jshint-stylish-url]: https://github.com/sindresorhus/jshint-stylish
