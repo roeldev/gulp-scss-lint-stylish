@@ -10,8 +10,8 @@ npm install --save gulp-scss-lint-stylish
 ## Usage
 ```js
 var gulp            = require('gulp'),
-    scssLint        = require('gulp-scss-lint),
-    scssLintStylish = require('gulp-scss-lint-stylish);
+    scssLint        = require('gulp-scss-lint'),
+    scssLintStylish = require('gulp-scss-lint-stylish');
 
 gulp.task('scss-lint', function()
 {
