@@ -1,8 +1,9 @@
-#gulp-scss-lint-stylish [![NPM version][npm-img]][npm-url] [![Build Status][travis-img]][travis-url] [![Dependency Status][david-img]][david-url]
+#gulp-scss-lint-stylish
+[![NPM version][npm-img]][npm-url] [![Build Status][travis-img]][travis-url] [![Dependency Status][david-img]][david-url]
+
 **Stylish reporter for [gulp-scss-lint][gulp-scss-lint-url], following the visual style of [jshint-stylish][jshint-stylish-url]**
 
-
-## Install
+## Installation
 ```sh
 npm install --save gulp-scss-lint-stylish
 ```
