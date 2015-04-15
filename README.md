@@ -13,7 +13,7 @@
 npm install --save gulp-scss-lint-stylish
 ```
 
-## Usage
+## How to use
 ```js
 var gulp            = require('gulp'),
     scssLint        = require('gulp-scss-lint'),
