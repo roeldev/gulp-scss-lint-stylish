@@ -1,6 +1,6 @@
 /**
  * gulp-scss-lint-stylish | test/main.js
- * file version: 0.00.002
+ * file version: 0.00.003
  */
 'use strict';
 
@@ -43,7 +43,7 @@ function getFixtureFile($file)
  * @param {array} $expected - The expected lines from the scss-lint output
  * @return {null}
  */
-function test($file, $done, $expected)
+function streamTest($file, $done, $expected)
 {
     var $stdoutWrite = process.stdout.write.bind(process.stdout),
         $stream      = GulpScssLint({ 'customReport': GulpScssLintStylish }),
@@ -54,6 +54,7 @@ function test($file, $done, $expected)
     process.stdout.write = function($str)
     {
         $line++;
+        //$stdoutWrite($line +' > '+ $str);
 
         // check for 3rd and 5th scss-lint output line
         if ($line === 3 || $line === 5)
@@ -78,20 +79,48 @@ function test($file, $done, $expected)
     $stream.end();
 }
 
+function stylishResult($severity)
+{
+    var $result = GulpScssLintStylish(
+    {
+        'path': __filename,
+        'scsslint':
+        {
+            'success': false,
+            'issues':
+            [
+                {
+                    'reason':   'Forced '+ $severity +' test',
+                    'severity': $severity,
+                    'line':     1,
+                    'column':   1
+                }
+            ]
+        }
+    });
+
+    for(var $i = 0, $iL = $result.length; $i < $iL; $i++)
+    {
+        $result[$i] = Chalk.stripColor($result[$i]);
+    }
+
+    return $result;
+}
+
 //------------------------------------------------------------------------------
 
-describe('GulpScssLintStylish()', function()
+describe('gulp-scss-lint', function()
 {
     // no errors or warnings, scss is valid
     it('should display nothing', function($done)
     {
-        test('success.scss', $done, []);
+        streamTest('success.scss', $done, []);
     });
 
     // warning in scss file
     it('should display stylish warning', function($done)
     {
-        test('warning.scss', $done,
+        streamTest('warning.scss', $done,
         [
             '  line 1  col 1  Avoid using id selectors\n',
             '  '+ Chalk.stripColor(LogSymbols.warning) +'  1 warning\n'
@@ -101,10 +130,57 @@ describe('GulpScssLintStylish()', function()
     // error in scss file
     it('should display stylish error', function($done)
     {
-        test('error.scss', $done,
+        streamTest('error.scss', $done,
         [
             '  line 5  col 1  Syntax Error: Invalid CSS after "}": expected "}", was ""\n',
             '  '+ Chalk.stripColor(LogSymbols.error) +'  1 error\n'
+        ]);
+    });
+});
+
+describe('GulpScssLintStylish()', function()
+{
+    it('should return on non existing report', function()
+    {
+        Assert.equal(null, GulpScssLintStylish({ }));
+    });
+
+    it('should return on empty report', function()
+    {
+        Assert.equal(null, GulpScssLintStylish({ 'scsslint': {} }));
+    });
+
+    it('should return on successful report', function()
+    {
+        Assert.equal(null, GulpScssLintStylish(
+        {
+            'scsslint': { 'success': true }
+        }));
+    });
+
+    it('should return a stylish error', function()
+    {
+        Assert.deepEqual(stylishResult('error'),
+        [
+            '',
+            __filename,
+            '  line 1  col 1  Forced error test',
+            '',
+            '  '+ Chalk.stripColor(LogSymbols.error) +'  1 error',
+            ''
+        ]);
+    });
+
+    it('should return a stylish error', function()
+    {
+        Assert.deepEqual(stylishResult('warning'),
+        [
+            '',
+            __filename,
+            '  line 1  col 1  Forced warning test',
+            '',
+            '  '+ Chalk.stripColor(LogSymbols.warning) +'  1 warning',
+            ''
         ]);
     });
 });
