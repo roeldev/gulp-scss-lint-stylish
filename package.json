@@ -9,24 +9,30 @@
     "type": "git",
     "url": "https://github.com/roeldev/gulp-scss-lint-stylish.git"
   },
-  "main": "index.js",
+  "main": "lib/index.js",
   "engines": {
     "node": ">=0.10"
   },
   "dependencies": {
-    "chalk": "^1.0.0",
+    "gulp-util": "^3.0.4",
     "log-symbols": "^1.0.0",
     "text-table": "^0.2.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.10.0",
+    "gulp-mocha": "^2.0.1",
     "gulp-scss-lint": "^0.1.11",
-    "gulp-util": "^3.0.4",
-    "jshint": "^2",
-    "mocha": "*"
+    "jshint": "^2.7.0",
+    "jshint-stylish": "^1.0.1",
+    "mocha": "^2.2.4",
+    "run-sequence": "^1.0.2"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "setup": "npm install",
+    "start": "npm install && gulp watch"
   },
   "keywords": [
     "gulpfriendly",
