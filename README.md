@@ -3,7 +3,7 @@
   [![NPM Version][npm-img]][npm-url]
   [![Linux Build][travis-img]][travis-url]
   [![Windows Build][appveyor-img]][appveyor-url]
-  [![Test Coverage][coveralls-image]][coveralls-url]
+  [![Test Coverage][coveralls-img]][coveralls-url]
   [![Dependency Status][david-img]][david-url]
 
 **Stylish reporter for [gulp-scss-lint][gulp-scss-lint-url], following the visual style of [jshint-stylish][jshint-stylish-url]**
