@@ -23,8 +23,10 @@ gulp.task('scss-lint', function()
 
 [npm-img]: https://badge.fury.io/js/gulp-scss-lint-stylish.svg
 [npm-url]: https://www.npmjs.com/package/gulp-scss-lint-stylish
-[travis-img]: https://travis-ci.org/roeldev/gulp-scss-lint-stylish.svg?branch=master
+[travis-img]: https://img.shields.io/travis/roeldev/gulp-scss-lint-stylish/master.svg?label=linux
 [travis-url]: https://travis-ci.org/roeldev/gulp-scss-lint-stylish
+[appveyor-image]: https://img.shields.io/appveyor/ci/roeldev/gulp-scss-lint-stylish/master.svg?label=windows
+[appveyor-url]: https://ci.appveyor.com/project/roeldev/gulp-scss-lint-stylish
 [david-img]: https://david-dm.org/roeldev/gulp-scss-lint-stylish.svg
 [david-url]: https://david-dm.org/roeldev/gulp-scss-lint-stylish
 

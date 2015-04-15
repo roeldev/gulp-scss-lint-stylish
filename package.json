@@ -1,17 +1,23 @@
 {
   "title": "gulp-scss-lint-stylish",
   "name": "gulp-scss-lint-stylish",
+  "version": "0.1.0",
   "homepage": "https://github.com/roeldev/gulp-scss-lint-stylish",
   "description": "Stylish reporter for gulp-scss-lint, following the visual style of jshint-stylish",
-  "version": "0.1.0",
   "license": "GPL-2.0+",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/roeldev/gulp-scss-lint-stylish.git"
   },
-  "main": "lib/index.js",
   "engines": {
     "node": ">=0.10"
+  },
+  "scripts": {
+    "setup": "npm install",
+    "start": "npm install && gulp watch",
+    "test": "mocha --reporter spec --check-leaks",
+    "test-ci": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec"
   },
   "dependencies": {
     "gulp-util": "^3.0.4",
@@ -24,15 +30,11 @@
     "gulp-jshint": "^1.10.0",
     "gulp-mocha": "^2.0.1",
     "gulp-scss-lint": "^0.1.11",
+    "istanbul": "^0.3.13",
     "jshint": "^2.7.0",
     "jshint-stylish": "^1.0.1",
     "mocha": "^2.2.4",
     "run-sequence": "^1.0.2"
-  },
-  "scripts": {
-    "test": "mocha",
-    "setup": "npm install",
-    "start": "npm install && gulp watch"
   },
   "keywords": [
     "gulpfriendly",

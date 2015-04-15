@@ -1,6 +1,6 @@
 /**
  * gulp-scss-lint-stylish | gulpfile.js
- * file version: 0.00.001
+ * file version: 0.00.002
  */
 'use strict';
 
@@ -9,7 +9,7 @@ var Gulp        = require('gulp'),
     GulpMocha   = require('gulp-mocha'),
     RunSequence = require('run-sequence');
 
-var JS_SRC = [__filename, './lib/**/*.js', 'test/*.js'];
+var JS_SRC = ['gulpfile.js', 'lib/**/*.js', 'test/*.js'];
 
 ////////////////////////////////////////////////////////////////////////////////
 
