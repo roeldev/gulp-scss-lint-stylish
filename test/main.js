@@ -1,6 +1,6 @@
 /**
  * gulp-scss-lint-stylish | test/main.js
- * file version: 0.00.003
+ * file version: 0.00.004
  */
 'use strict';
 
@@ -79,27 +79,33 @@ function streamTest($file, $done, $expected)
     $stream.end();
 }
 
-function stylishResult($severity)
+function stylishResult($severity, $amount)
 {
-    var $result = GulpScssLintStylish(
-    {
-        'path': __filename,
-        'scsslint':
+    var $result,
+        $iL,
+        $data =
         {
-            'success': false,
-            'issues':
-            [
-                {
-                    'reason':   'Forced '+ $severity +' test',
-                    'severity': $severity,
-                    'line':     1,
-                    'column':   1
-                }
-            ]
-        }
-    });
+            'path': __filename,
+            'scsslint':
+            {
+                'success': false,
+                'issues': []
+            }
+        };
 
-    for(var $i = 0, $iL = $result.length; $i < $iL; $i++)
+    for(var $i = 1; $i <= $amount; $i++)
+    {
+        $data.scsslint.issues.push(
+        {
+            'reason':   'Forced '+ $severity +' test',
+            'severity': $severity,
+            'line':     $i,
+            'column':   $i
+        });
+    }
+
+    $result = GulpScssLintStylish($data);
+    for($i = 0, $iL = $result.length; $i < $iL; $i++)
     {
         $result[$i] = Chalk.stripColor($result[$i]);
     }
@@ -160,7 +166,7 @@ describe('GulpScssLintStylish()', function()
 
     it('should return a stylish error', function()
     {
-        Assert.deepEqual(stylishResult('error'),
+        Assert.deepEqual(stylishResult('error', 1),
         [
             '',
             __filename,
@@ -171,15 +177,15 @@ describe('GulpScssLintStylish()', function()
         ]);
     });
 
-    it('should return a stylish error', function()
+    it('should return two stylish warnings', function()
     {
-        Assert.deepEqual(stylishResult('warning'),
+        Assert.deepEqual(stylishResult('warning', 2),
         [
             '',
             __filename,
-            '  line 1  col 1  Forced warning test',
+            '  line 1  col 1  Forced warning test\n  line 2  col 2  Forced warning test',
             '',
-            '  '+ Chalk.stripColor(LogSymbols.warning) +'  1 warning',
+            '  '+ Chalk.stripColor(LogSymbols.warning) +'  2 warnings',
             ''
         ]);
     });
