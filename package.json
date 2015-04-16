@@ -1,37 +1,50 @@
 {
   "title": "gulp-scss-lint-stylish",
   "name": "gulp-scss-lint-stylish",
+  "version": "0.1.1",
   "homepage": "https://github.com/roeldev/gulp-scss-lint-stylish",
   "description": "Stylish reporter for gulp-scss-lint, following the visual style of jshint-stylish",
-  "version": "0.1.0",
-  "license": "MIT",
+  "license": "GPL-2.0+",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/roeldev/gulp-scss-lint-stylish.git"
   },
-  "main": "index.js",
   "engines": {
     "node": ">=0.10"
   },
+  "scripts": {
+    "setup": "npm install",
+    "start": "npm install && gulp watch",
+    "test": "mocha --reporter spec --check-leaks",
+    "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks"
+  },
   "dependencies": {
-    "chalk": "^1.0.0",
+    "gulp-util": "^3.0.4",
     "log-symbols": "^1.0.0",
     "text-table": "^0.2.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "coveralls": "^2.11.2",
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.10.0",
+    "gulp-mocha": "^2.0.1",
     "gulp-scss-lint": "^0.1.11",
-    "gulp-util": "^3.0.4",
-    "jshint": "^2",
-    "mocha": "*"
-  },
-  "scripts": {
-    "test": "mocha"
+    "istanbul": "^0.3.13",
+    "jshint": "^2.7.0",
+    "jshint-stylish": "^1.0.1",
+    "mocha": "^2.2.4",
+    "mocha-lcov-reporter": "0.0.2",
+    "run-sequence": "^1.0.2"
   },
   "keywords": [
     "gulpfriendly",
     "gulp-scss-lint",
     "scss-lint",
+    "scsslint",
+    "scss",
+    "sass",
     "reporter",
     "lint",
     "validate",
