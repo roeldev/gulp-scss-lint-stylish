@@ -125,6 +125,8 @@ function stylishResult($severity, $amount)
 
 describe('gulp-scss-lint', function()
 {
+    this.timeout(5000);
+
     // no errors or warnings, scss is valid
     it('should display nothing', function($done)
     {
