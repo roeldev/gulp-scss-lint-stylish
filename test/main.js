@@ -54,12 +54,12 @@ function streamTest($file, $done, $expected)
     process.stdout.write = function($str)
     {
         $line++;
-        //$stdoutWrite($line +' > '+ $str);
+        $stdoutWrite($str);
 
-        // check for 3rd and 5th scss-lint output line
-        if ($line === 3 || $line === 5)
+        $str = $str.split('\n');
+        for (var $i = 0, $iL = $str.length; $i < $iL; $i++)
         {
-            $result.push( Chalk.stripColor($str) );
+            $result.push( Chalk.stripColor($str[$i]) );
         }
     };
 
@@ -67,6 +67,11 @@ function streamTest($file, $done, $expected)
     $stream.on('end', function()
     {
         process.stdout.write = $stdoutWrite;
+
+        if ($result.length > 0)
+        {
+            $result = [$result[2], $result[4]];
+        }
 
         // test the results from the scss-lint cli output
         Assert.deepEqual($result, $expected);
@@ -79,10 +84,16 @@ function streamTest($file, $done, $expected)
     $stream.end();
 }
 
+/**
+ * Strip colors from a simulated report from gulp-scss-lint.
+ *
+ * @param {string} $severity - Either error or warning
+ * @param {[type]} $amount - The amount of errors/warnings
+ * @return {string} Returns the color stripped output.
+ */
 function stylishResult($severity, $amount)
 {
     var $result,
-        $iL,
         $data =
         {
             'path': __filename,
@@ -105,10 +116,7 @@ function stylishResult($severity, $amount)
     }
 
     $result = GulpScssLintStylish($data);
-    for($i = 0, $iL = $result.length; $i < $iL; $i++)
-    {
-        $result[$i] = Chalk.stripColor($result[$i]);
-    }
+    $result = Chalk.stripColor($result);
 
     return $result;
 }
@@ -128,8 +136,8 @@ describe('gulp-scss-lint', function()
     {
         streamTest('warning.scss', $done,
         [
-            '  line 1  col 1  Avoid using id selectors\n',
-            '  '+ Chalk.stripColor(LogSymbols.warning) +'  1 warning\n'
+            '  line 1  col 1  Avoid using id selectors',
+            '  '+ Chalk.stripColor(LogSymbols.warning) +'  1 warning'
         ]);
     });
 
@@ -138,8 +146,8 @@ describe('gulp-scss-lint', function()
     {
         streamTest('error.scss', $done,
         [
-            '  line 5  col 1  Syntax Error: Invalid CSS after "}": expected "}", was ""\n',
-            '  '+ Chalk.stripColor(LogSymbols.error) +'  1 error\n'
+            '  line 5  col 1  Syntax Error: Invalid CSS after "}": expected "}", was ""',
+            '  '+ Chalk.stripColor(LogSymbols.error) +'  1 error'
         ]);
     });
 });
@@ -148,17 +156,17 @@ describe('GulpScssLintStylish()', function()
 {
     it('should return on non existing report', function()
     {
-        Assert.equal(null, GulpScssLintStylish({ }));
+        Assert.equal(false, GulpScssLintStylish({ }));
     });
 
     it('should return on empty report', function()
     {
-        Assert.equal(null, GulpScssLintStylish({ 'scsslint': {} }));
+        Assert.equal(false, GulpScssLintStylish({ 'scsslint': {} }));
     });
 
     it('should return on successful report', function()
     {
-        Assert.equal(null, GulpScssLintStylish(
+        Assert.equal(false, GulpScssLintStylish(
         {
             'scsslint': { 'success': true }
         }));
@@ -174,7 +182,7 @@ describe('GulpScssLintStylish()', function()
             '',
             '  '+ Chalk.stripColor(LogSymbols.error) +'  1 error',
             ''
-        ]);
+        ].join('\n'));
     });
 
     it('should return two stylish warnings', function()
@@ -187,6 +195,6 @@ describe('GulpScssLintStylish()', function()
             '',
             '  '+ Chalk.stripColor(LogSymbols.warning) +'  2 warnings',
             ''
-        ]);
+        ].join('\n'));
     });
 });
