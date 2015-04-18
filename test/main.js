@@ -125,6 +125,7 @@ function stylishResult($severity, $amount)
 
 describe('gulp-scss-lint', function()
 {
+    // set timeout for mocha to 2500+ ms so Appveyor won't fail
     this.timeout(5000);
 
     // no errors or warnings, scss is valid
