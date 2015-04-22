@@ -1,17 +1,17 @@
 /**
  * gulp-scss-lint-stylish | test/main.js
- * file version: 0.00.004
+ * file version: 0.00.005
  */
 'use strict';
 
-var Assert              = require('assert'),
-    FileSystem          = require('fs'),
-    Path                = require('path'),
-    LogSymbols          = require('log-symbols'),
-    GulpScssLint        = require('gulp-scss-lint'),
-    GulpScssLintStylish = require('../lib/index.js'),
-    GulpUtil            = require('gulp-util'),
-    Chalk               = GulpUtil.colors;
+var Assert              = require('assert');
+var FileSystem          = require('fs');
+var Path                = require('path');
+var LogSymbols          = require('log-symbols');
+var GulpScssLint        = require('gulp-scss-lint');
+var GulpScssLintStylish = require('../lib/index.js');
+var GulpUtil            = require('gulp-util');
+var Chalk               = GulpUtil.colors;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -23,7 +23,7 @@ var Assert              = require('assert'),
  */
 function getFixtureFile($file)
 {
-    $file = Path.resolve(__dirname, './fixtures/'+ $file);
+    $file = Path.resolve(__dirname, './fixtures/' + $file);
     $file = new GulpUtil.File(
     {
         'cwd':      Path.dirname(Path.dirname($file)),
@@ -45,10 +45,10 @@ function getFixtureFile($file)
  */
 function streamTest($file, $done, $expected)
 {
-    var $stdoutWrite = process.stdout.write.bind(process.stdout),
-        $stream      = GulpScssLint({ 'customReport': GulpScssLintStylish }),
-        $result      = [],
-        $line        = 0;
+    var $stdoutWrite = process.stdout.write.bind(process.stdout);
+    var $stream      = GulpScssLint({ 'customReport': GulpScssLintStylish });
+    var $result      = [];
+    var $line        = 0;
 
     // collect the output from the linter and parse it's result
     process.stdout.write = function($str)
@@ -57,6 +57,7 @@ function streamTest($file, $done, $expected)
         $stdoutWrite($str);
 
         $str = $str.split('\n');
+
         for (var $i = 0, $iL = $str.length; $i < $iL; $i++)
         {
             $result.push( Chalk.stripColor($str[$i]) );
@@ -93,22 +94,22 @@ function streamTest($file, $done, $expected)
  */
 function stylishResult($severity, $amount)
 {
-    var $result,
-        $data =
+    var $result;
+    var $data =
+    {
+        'path': __filename,
+        'scsslint':
         {
-            'path': __filename,
-            'scsslint':
-            {
-                'success': false,
-                'issues': []
-            }
-        };
+            'success': false,
+            'issues': []
+        }
+    };
 
-    for(var $i = 1; $i <= $amount; $i++)
+    for (var $i = 1; $i <= $amount; $i++)
     {
         $data.scsslint.issues.push(
         {
-            'reason':   'Forced '+ $severity +' test',
+            'reason':   'Forced ' + $severity + ' test',
             'severity': $severity,
             'line':     $i,
             'column':   $i
@@ -140,17 +141,19 @@ describe('gulp-scss-lint', function()
         streamTest('warning.scss', $done,
         [
             '  line 1  col 1  Avoid using id selectors',
-            '  '+ Chalk.stripColor(LogSymbols.warning) +'  1 warning'
+            '  ' + Chalk.stripColor(LogSymbols.warning) + '  1 warning'
         ]);
     });
 
     // error in scss file
     it('should display stylish error', function($done)
     {
+        var $error = 'Invalid CSS after "}": expected "}", was ""';
+
         streamTest('error.scss', $done,
         [
-            '  line 5  col 1  Syntax Error: Invalid CSS after "}": expected "}", was ""',
-            '  '+ Chalk.stripColor(LogSymbols.error) +'  1 error'
+            '  line 5  col 1  Syntax Error: ' + $error,
+            '  ' + Chalk.stripColor(LogSymbols.error) + '  1 error'
         ]);
     });
 });
@@ -183,7 +186,7 @@ describe('GulpScssLintStylish()', function()
             __filename,
             '  line 1  col 1  Forced error test',
             '',
-            '  '+ Chalk.stripColor(LogSymbols.error) +'  1 error',
+            '  ' + Chalk.stripColor(LogSymbols.error) + '  1 error',
             ''
         ].join('\n'));
     });
@@ -194,9 +197,10 @@ describe('GulpScssLintStylish()', function()
         [
             '',
             __filename,
-            '  line 1  col 1  Forced warning test\n  line 2  col 2  Forced warning test',
+            '  line 1  col 1  Forced warning test',
+            '  line 2  col 2  Forced warning test',
             '',
-            '  '+ Chalk.stripColor(LogSymbols.warning) +'  2 warnings',
+            '  ' + Chalk.stripColor(LogSymbols.warning) + '  2 warnings',
             ''
         ].join('\n'));
     });
