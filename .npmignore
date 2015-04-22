@@ -1,6 +1,7 @@
 .gitattributes
 .gitignore
 .gitkeep
+.jscsrc
 .jshintrc
 
 .travis.yml
