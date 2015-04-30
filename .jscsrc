@@ -1,5 +1,4 @@
 {
-    "disallowDanglingUnderscores": true,
     "disallowEmptyBlocks": true,
     "disallowImplicitTypeConversion": ["numeric", "binary", "string"],
     "disallowKeywords": ["with"],
@@ -32,10 +31,10 @@
     "requireLineFeedAtFileEnd": true,
     "requireNewlineBeforeBlockStatements": true,
     "requireOperatorBeforeLineBreak": true,
-    "requirePaddingNewLineAfterVariableDeclaration": true,
+    //"requirePaddingNewLineAfterVariableDeclaration": true,
     //"requirePaddingNewLinesAfterBlocks": true,
     "requirePaddingNewlinesBeforeKeywords":
-        ["do", "for", "if", "switch", "case", "try", "void", "while", "function"],
+        ["do", "case", "try", "void", "while", "function"],
     //"requirePaddingNewLinesInObjects": true,
     "requireParenthesesAroundIIFE": true,
     "requireQuotedKeysInObjects": true,
