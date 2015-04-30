@@ -1,6 +1,6 @@
 /**
  * gulp-scss-lint-stylish | test/main.js
- * file version: 0.00.005
+ * file version: 0.00.006
  */
 'use strict';
 
@@ -109,6 +109,7 @@ function stylishResult($severity, $amount)
     {
         $data.scsslint.issues.push(
         {
+            'linter':   'TestCase',
             'reason':   'Forced ' + $severity + ' test',
             'severity': $severity,
             'line':     $i,
@@ -140,7 +141,7 @@ describe('gulp-scss-lint', function()
     {
         streamTest('warning.scss', $done,
         [
-            '  line 1  col 1  Avoid using id selectors',
+            '  line 1  col 1  IdSelector: Avoid using id selectors',
             '  ' + Chalk.stripColor(LogSymbols.warning) + '  1 warning'
         ]);
     });
@@ -184,7 +185,7 @@ describe('GulpScssLintStylish()', function()
         [
             '',
             __filename,
-            '  line 1  col 1  Forced error test',
+            '  line 1  col 1  TestCase: Forced error test',
             '',
             '  ' + Chalk.stripColor(LogSymbols.error) + '  1 error',
             ''
@@ -197,8 +198,8 @@ describe('GulpScssLintStylish()', function()
         [
             '',
             __filename,
-            '  line 1  col 1  Forced warning test',
-            '  line 2  col 2  Forced warning test',
+            '  line 1  col 1  TestCase: Forced warning test',
+            '  line 2  col 2  TestCase: Forced warning test',
             '',
             '  ' + Chalk.stripColor(LogSymbols.warning) + '  2 warnings',
             ''
