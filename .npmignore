@@ -1,7 +1,11 @@
 .gitattributes
 .gitignore
 .gitkeep
+.jscsrc
+.jshintrc
 
 .travis.yml
+appveyor.yml
+gulpfile.js
 
 *.bat
