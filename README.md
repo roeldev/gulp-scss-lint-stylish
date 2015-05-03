@@ -6,7 +6,7 @@
   [![Test Coverage][coveralls-img]][coveralls-url]
   [![Dependency Status][david-img]][david-url]
 
-**Stylish reporter for [gulp-scss-lint][gulp-scss-lint-url], following the visual style of [jshint-stylish][jshint-stylish-url]**
+**Stylish reporter for [gulp-scss-lint][gulp-scss-lint-url], following the visual style of [jshint-stylish][jshint-stylish-url].**
 
 ## Installation
 ```sh
@@ -15,9 +15,9 @@ npm install --save gulp-scss-lint-stylish
 
 ## How to use
 ```js
-var gulp            = require('gulp'),
-    scssLint        = require('gulp-scss-lint'),
-    scssLintStylish = require('gulp-scss-lint-stylish');
+var gulp            = require('gulp');
+var scssLint        = require('gulp-scss-lint');
+var scssLintStylish = require('gulp-scss-lint-stylish');
 
 gulp.task('scss-lint', function()
 {

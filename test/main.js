@@ -1,16 +1,17 @@
 /**
  * gulp-scss-lint-stylish | test/main.js
- * file version: 0.00.006
+ * file version: 0.00.007
  */
 'use strict';
 
 var Assert              = require('assert');
 var FileSystem          = require('fs');
-var Path                = require('path');
-var LogSymbols          = require('log-symbols');
 var GulpScssLint        = require('gulp-scss-lint');
 var GulpScssLintStylish = require('../lib/index.js');
 var GulpUtil            = require('gulp-util');
+var Path                = require('path');
+var LogInterceptor      = require('log-interceptor');
+var LogSymbols          = require('log-symbols');
 var Chalk               = GulpUtil.colors;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -45,29 +46,20 @@ function getFixtureFile($file)
  */
 function streamTest($file, $done, $expected)
 {
-    var $stdoutWrite = process.stdout.write.bind(process.stdout);
-    var $stream      = GulpScssLint({ 'customReport': GulpScssLintStylish });
-    var $result      = [];
-    var $line        = 0;
+    var $stream = GulpScssLint({ 'customReport': GulpScssLintStylish });
+    var $result = [];
 
     // collect the output from the linter and parse it's result
-    process.stdout.write = function($str)
+    LogInterceptor(function($str)
     {
-        $line++;
-        $stdoutWrite($str);
-
-        $str = $str.split('\n');
-
-        for (var $i = 0, $iL = $str.length; $i < $iL; $i++)
-        {
-            $result.push( Chalk.stripColor($str[$i]) );
-        }
-    };
+        $str    = this.stripColor($str);
+        $result = $str.split('\n');
+    });
 
     // is triggerend when gulp-scss-lint is finished
     $stream.on('end', function()
     {
-        process.stdout.write = $stdoutWrite;
+        LogInterceptor.end();
 
         if ($result.length > 0)
         {
@@ -105,6 +97,7 @@ function stylishResult($severity, $amount)
         }
     };
 
+    // prepare test data
     for (var $i = 1; $i <= $amount; $i++)
     {
         $data.scsslint.issues.push(
@@ -117,9 +110,12 @@ function stylishResult($severity, $amount)
         });
     }
 
+    LogInterceptor();
+
     $result = GulpScssLintStylish($data);
     $result = Chalk.stripColor($result);
 
+    LogInterceptor.end();
     return $result;
 }
 
