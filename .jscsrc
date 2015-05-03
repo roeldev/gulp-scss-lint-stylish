@@ -34,7 +34,7 @@
     //"requirePaddingNewLineAfterVariableDeclaration": true,
     //"requirePaddingNewLinesAfterBlocks": true,
     "requirePaddingNewlinesBeforeKeywords":
-        ["do", "case", "try", "void", "while", "function"],
+        ["do", "case", "try", "void", "while"],
     //"requirePaddingNewLinesInObjects": true,
     "requireParenthesesAroundIIFE": true,
     "requireQuotedKeysInObjects": true,
