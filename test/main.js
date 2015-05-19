@@ -1,17 +1,18 @@
 /**
  * gulp-scss-lint-stylish | test/main.js
- * file version: 0.00.006
+ * file version: 0.00.008
  */
 'use strict';
 
 var Assert              = require('assert');
 var FileSystem          = require('fs');
-var Path                = require('path');
-var LogSymbols          = require('log-symbols');
 var GulpScssLint        = require('gulp-scss-lint');
 var GulpScssLintStylish = require('../lib/index.js');
 var GulpUtil            = require('gulp-util');
-var Chalk               = GulpUtil.colors;
+var Path                = require('path');
+var LogInterceptor      = require('log-interceptor');
+var LogSymbols          = require('log-symbols');
+var StripAnsi           = GulpUtil.colors.stripColor;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -45,30 +46,15 @@ function getFixtureFile($file)
  */
 function streamTest($file, $done, $expected)
 {
-    var $stdoutWrite = process.stdout.write.bind(process.stdout);
-    var $stream      = GulpScssLint({ 'customReport': GulpScssLintStylish });
-    var $result      = [];
-    var $line        = 0;
+    var $stream = GulpScssLint({ 'customReport': GulpScssLintStylish });
 
     // collect the output from the linter and parse it's result
-    process.stdout.write = function($str)
-    {
-        $line++;
-        $stdoutWrite($str);
-
-        $str = $str.split('\n');
-
-        for (var $i = 0, $iL = $str.length; $i < $iL; $i++)
-        {
-            $result.push( Chalk.stripColor($str[$i]) );
-        }
-    };
+    LogInterceptor({ 'stripColor': true, 'splitOnLinebreak': true });
 
     // is triggerend when gulp-scss-lint is finished
     $stream.on('end', function()
     {
-        process.stdout.write = $stdoutWrite;
-
+        var $result = LogInterceptor.end();
         if ($result.length > 0)
         {
             $result = [$result[2], $result[4]];
@@ -105,6 +91,7 @@ function stylishResult($severity, $amount)
         }
     };
 
+    // prepare test data
     for (var $i = 1; $i <= $amount; $i++)
     {
         $data.scsslint.issues.push(
@@ -117,9 +104,12 @@ function stylishResult($severity, $amount)
         });
     }
 
-    $result = GulpScssLintStylish($data);
-    $result = Chalk.stripColor($result);
+    LogInterceptor();
 
+    $result = GulpScssLintStylish($data);
+    $result = StripAnsi($result);
+
+    LogInterceptor.end();
     return $result;
 }
 
@@ -141,8 +131,8 @@ describe('gulp-scss-lint', function()
     {
         streamTest('warning.scss', $done,
         [
-            '  line 1  col 1  IdSelector: Avoid using id selectors',
-            '  ' + Chalk.stripColor(LogSymbols.warning) + '  1 warning'
+            '  line 1  col 1  IdSelector: Avoid using id selectors\n',
+            '  ' + StripAnsi(LogSymbols.warning) + '  1 warning\n'
         ]);
     });
 
@@ -153,8 +143,8 @@ describe('gulp-scss-lint', function()
 
         streamTest('error.scss', $done,
         [
-            '  line 5  col 1  Syntax Error: ' + $error,
-            '  ' + Chalk.stripColor(LogSymbols.error) + '  1 error'
+            '  line 5  col 1  Syntax Error: ' + $error + '\n',
+            '  ' + StripAnsi(LogSymbols.error) + '  1 error\n'
         ]);
     });
 });
@@ -187,7 +177,7 @@ describe('GulpScssLintStylish()', function()
             __filename,
             '  line 1  col 1  TestCase: Forced error test',
             '',
-            '  ' + Chalk.stripColor(LogSymbols.error) + '  1 error',
+            '  ' + StripAnsi(LogSymbols.error) + '  1 error',
             ''
         ].join('\n'));
     });
@@ -201,7 +191,7 @@ describe('GulpScssLintStylish()', function()
             '  line 1  col 1  TestCase: Forced warning test',
             '  line 2  col 2  TestCase: Forced warning test',
             '',
-            '  ' + Chalk.stripColor(LogSymbols.warning) + '  2 warnings',
+            '  ' + StripAnsi(LogSymbols.warning) + '  2 warnings',
             ''
         ].join('\n'));
     });
