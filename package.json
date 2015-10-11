@@ -37,7 +37,7 @@
     "jscs": "^2.2.1",
     "jshint": "^2.8.0",
     "jshint-stylish": "^2.0.1",
-    "log-interceptor": "^0.2.1",
+    "log-interceptor": "^1.0.0",
     "mocha": "^2.3.3",
     "mocha-lcov-reporter": "1.0.0",
     "run-sequence": "^1.1.4"
