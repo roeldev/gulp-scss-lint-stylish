@@ -4,14 +4,16 @@
   "version": "1.0.0",
   "homepage": "https://github.com/roeldev/gulp-scss-lint-stylish",
   "description": "Stylish reporter for gulp-scss-lint, following the visual style of jshint-stylish",
+  "author": "Roel Schut (http://roelschut.nl)",
   "license": "GPL-2.0+",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/roeldev/gulp-scss-lint-stylish.git"
   },
+  "bugs": "https://github.com/roeldev/gulp-scss-lint-stylish/issues",
   "engines": {
-    "node": ">=0.10"
+    "node": ">=0.12"
   },
   "scripts": {
     "setup": "npm install",
