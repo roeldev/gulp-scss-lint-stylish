@@ -1,6 +1,5 @@
 /**
- * gulp-scss-lint-stylish | test/main.js
- * file version: 0.00.008
+ * gulp-scss-lint-stylish | test/index_tests.js
  */
 'use strict';
 
@@ -14,7 +13,7 @@ var LogInterceptor      = require('log-interceptor');
 var LogSymbols          = require('log-symbols');
 var StripAnsi           = GulpUtil.colors.stripColor;
 
-////////////////////////////////////////////////////////////////////////////////
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 /**
  * Returns a fixture file wich can be piped to gulp-scss-lint.
@@ -25,8 +24,7 @@ var StripAnsi           = GulpUtil.colors.stripColor;
 function getFixtureFile($file)
 {
     $file = Path.resolve(__dirname, './fixtures/' + $file);
-    $file = new GulpUtil.File(
-    {
+    $file = new GulpUtil.File({
         'cwd':      Path.dirname(Path.dirname($file)),
         'base':     Path.dirname($file),
         'path':     $file,
@@ -81,11 +79,9 @@ function streamTest($file, $done, $expected)
 function stylishResult($severity, $amount)
 {
     var $result;
-    var $data =
-    {
+    var $data = {
         'path': __filename,
-        'scsslint':
-        {
+        'scsslint': {
             'success': false,
             'issues': []
         }
@@ -94,8 +90,7 @@ function stylishResult($severity, $amount)
     // prepare test data
     for (var $i = 1; $i <= $amount; $i++)
     {
-        $data.scsslint.issues.push(
-        {
+        $data.scsslint.issues.push({
             'linter':   'TestCase',
             'reason':   'Forced ' + $severity + ' test',
             'severity': $severity,
@@ -121,28 +116,26 @@ describe('gulp-scss-lint', function()
     this.timeout(5000);
 
     // no errors or warnings, scss is valid
-    it('should display nothing', function($done)
+    it('display nothing', function($done)
     {
         streamTest('success.scss', $done, []);
     });
 
     // warning in scss file
-    it('should display stylish warning', function($done)
+    it('display stylish warning', function($done)
     {
-        streamTest('warning.scss', $done,
-        [
+        streamTest('warning.scss', $done, [
             '  line 1  col 1  IdSelector: Avoid using id selectors\n',
             '  ' + StripAnsi(LogSymbols.warning) + '  1 warning\n'
         ]);
     });
 
     // error in scss file
-    it('should display stylish error', function($done)
+    it('display stylish error', function($done)
     {
         var $error = 'Invalid CSS after "}": expected "}", was ""';
 
-        streamTest('error.scss', $done,
-        [
+        streamTest('error.scss', $done, [
             '  line 5  col 1  Syntax Error: ' + $error + '\n',
             '  ' + StripAnsi(LogSymbols.error) + '  1 error\n'
         ]);
@@ -151,28 +144,26 @@ describe('gulp-scss-lint', function()
 
 describe('GulpScssLintStylish()', function()
 {
-    it('should return on non existing report', function()
+    it('return on non existing report', function()
     {
         Assert.equal(false, GulpScssLintStylish({ }));
     });
 
-    it('should return on empty report', function()
+    it('return on empty report', function()
     {
         Assert.equal(false, GulpScssLintStylish({ 'scsslint': {} }));
     });
 
-    it('should return on successful report', function()
+    it('return on successful report', function()
     {
-        Assert.equal(false, GulpScssLintStylish(
-        {
+        Assert.equal(false, GulpScssLintStylish({
             'scsslint': { 'success': true }
         }));
     });
 
-    it('should return a stylish error', function()
+    it('return a stylish error', function()
     {
-        Assert.deepEqual(stylishResult('error', 1),
-        [
+        Assert.deepEqual(stylishResult('error', 1), [
             '',
             __filename,
             '  line 1  col 1  TestCase: Forced error test',
@@ -182,10 +173,9 @@ describe('GulpScssLintStylish()', function()
         ].join('\n'));
     });
 
-    it('should return two stylish warnings', function()
+    it('return two stylish warnings', function()
     {
-        Assert.deepEqual(stylishResult('warning', 2),
-        [
+        Assert.deepEqual(stylishResult('warning', 2), [
             '',
             __filename,
             '  line 1  col 1  TestCase: Forced warning test',

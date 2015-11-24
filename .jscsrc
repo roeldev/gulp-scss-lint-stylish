@@ -34,17 +34,15 @@
     //"requirePaddingNewLineAfterVariableDeclaration": true,
     //"requirePaddingNewLinesAfterBlocks": true,
     "requirePaddingNewlinesBeforeKeywords":
-        ["do", "case", "try", "void", "while"],
+        ["do", "case", "try", "void", "while", "function"],
     //"requirePaddingNewLinesInObjects": true,
     "requireParenthesesAroundIIFE": true,
-    "requireQuotedKeysInObjects": true,
     "requireSemicolons": true,
     "requireSpaceAfterBinaryOperators": true,
     "requireSpaceAfterKeywords":
         ["do", "for", "if", "else", "switch", "case", "try", "catch", "void", "while", "with", "return", "typeof"],
     "requireSpaceAfterLineComment":
-        { "allExcept": ["#", "=",
-            "------------------------------------------------------------------------------", "//////////////////////////////////////////////////////////////////////////////"] },
+        { "allExcept": ["#", "="] },
     "requireSpaceBeforeBinaryOperators": true,
     "requireSpaceBeforeObjectValues": true,
     "requireSpaceBetweenArguments": true,
