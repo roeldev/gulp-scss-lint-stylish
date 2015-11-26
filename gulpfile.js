@@ -4,28 +4,30 @@
  */
 'use strict';
 
-var Gulp            = require('gulp');
-var GulpJsHint      = require('gulp-jshint');
-var GulpJsCs        = require('gulp-jscs');
-var GulpJsCsStylish = require('gulp-jscs-stylish');
-var GulpMocha       = require('gulp-mocha');
-var RunSequence     = require('run-sequence');
+var Gulp                = require('gulp');
+var GulpJsHint          = require('gulp-jshint');
+var GulpJsCs            = require('gulp-jscs');
+var GulpJsCsStylish     = require('gulp-jscs-stylish');
+var GulpScssLint        = require('gulp-scss-lint');
+var GulpScssLintStylish = require('./lib/index.js');
+var GulpMocha           = require('gulp-mocha');
+var RunSequence         = require('run-sequence');
 
-var Noop = function()
-{
-};
-
-//------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 var JS_SRC = ['gulpfile.js', 'lib/**/*.js', 'test/*.js'];
 
-////////////////////////////////////////////////////////////////////////////////
+function noop()
+{
+}
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 Gulp.task('lint', function()
 {
     return Gulp.src(JS_SRC)
         .pipe( GulpJsHint() )
-        .pipe( GulpJsCs() ).on('error', Noop)
+        .pipe( GulpJsCs() ).on('error', noop)
         .pipe( GulpJsCsStylish.combineWithHintResults() )
         .pipe( GulpJsHint.reporter('jshint-stylish') );
 });
@@ -50,4 +52,13 @@ Gulp.task('watch', function()
 Gulp.task('watch:lint', function()
 {
     Gulp.watch(JS_SRC, ['lint']);
+});
+
+Gulp.task('demo', function()
+{
+    Gulp.src('./test/fixtures/demo.scss')
+        .pipe( GulpScssLint() );
+
+    Gulp.src('./test/fixtures/demo.scss')
+        .pipe( GulpScssLint({ customReport: GulpScssLintStylish }) );
 });
