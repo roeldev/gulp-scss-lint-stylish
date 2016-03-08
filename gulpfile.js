@@ -15,7 +15,7 @@ var RunSequence         = require('run-sequence');
 
 // -----------------------------------------------------------------------------
 
-var JS_SRC = ['gulpfile.js', 'lib/**/*.js', 'test/*.js'];
+var JS_SRC = ['gulpfile.js', 'lib/**/*.js', 'test/**/*.js'];
 
 function noop()
 {

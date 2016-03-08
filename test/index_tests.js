@@ -4,109 +4,20 @@
 'use strict';
 
 var Assert              = require('assert');
-var FileSystem          = require('fs');
-var GulpScssLint        = require('gulp-scss-lint');
-var GulpScssLintStylish = require('../lib/index.js');
 var GulpUtil            = require('gulp-util');
-var Path                = require('path');
-var LogInterceptor      = require('log-interceptor');
+// var GulpScssLint        = require('gulp-scss-lint');
+var GulpScssLintStylish = require('../lib/index.js');
+// var LogInterceptor      = require('log-interceptor');
 var LogSymbols          = require('log-symbols');
+var Path                = require('path');
 var StripAnsi           = GulpUtil.colors.stripColor;
+
+var streamTest     = require('./helpers/streamTest');
+var stylishResult  = require('./helpers/stylishResult');
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-/**
- * Returns a fixture file wich can be piped to gulp-scss-lint.
- *
- * @param {string} $file - The file to test
- * @return {object} - Vinyl object
- */
-function getFixtureFile($file)
-{
-    $file = Path.resolve(__dirname, './fixtures/' + $file);
-    $file = new GulpUtil.File({
-        'cwd':      Path.dirname(Path.dirname($file)),
-        'base':     Path.dirname($file),
-        'path':     $file,
-        'contents': FileSystem.readFileSync($file)
-    });
-
-    return $file;
-}
-
-/**
- * Test if gulp-scss-lint stream's stylished output is correct.
- *
- * @param {string} $file - The file to test
- * @param {function} $done - Mocha callback function
- * @param {array} $expected - The expected lines from the scss-lint output
- * @return {null}
- */
-function streamTest($file, $done, $expected)
-{
-    var $stream = GulpScssLint({ 'customReport': GulpScssLintStylish });
-
-    // collect the output from the linter and parse it's result
-    LogInterceptor({ 'stripColor': true, 'splitOnLinebreak': true });
-
-    // is triggerend when gulp-scss-lint is finished
-    $stream.on('end', function()
-    {
-        var $result = LogInterceptor.end();
-        if ($result.length > 0)
-        {
-            $result = [$result[2], $result[4]];
-        }
-
-        // test the results from the scss-lint cli output
-        Assert.deepEqual($result, $expected);
-
-        // tell mocha the test is complete
-        $done();
-    });
-
-    $stream.write( getFixtureFile($file) );
-    $stream.end();
-}
-
-/**
- * Strip colors from a simulated report from gulp-scss-lint.
- *
- * @param {string} $severity - Either error or warning
- * @param {[type]} $amount - The amount of errors/warnings
- * @return {string} Returns the color stripped output.
- */
-function stylishResult($severity, $amount)
-{
-    var $result;
-    var $data = {
-        'path': __filename,
-        'scsslint': {
-            'success': false,
-            'issues': []
-        }
-    };
-
-    // prepare test data
-    for (var $i = 1; $i <= $amount; $i++)
-    {
-        $data.scsslint.issues.push({
-            'linter':   'TestCase',
-            'reason':   'Forced ' + $severity + ' test',
-            'severity': $severity,
-            'line':     $i,
-            'column':   $i
-        });
-    }
-
-    LogInterceptor();
-
-    $result = GulpScssLintStylish($data);
-    $result = StripAnsi($result);
-
-    LogInterceptor.end();
-    return $result;
-}
+var FILE = '.' + Path.sep + Path.relative(process.cwd(), __filename);
 
 // -----------------------------------------------------------------------------
 
@@ -163,9 +74,9 @@ describe('GulpScssLintStylish()', function()
 
     it('return a stylish error', function()
     {
-        Assert.deepEqual(stylishResult('error', 1), [
+        Assert.deepEqual(stylishResult(__filename, 'error', 1), [
             '',
-            __filename,
+            FILE,
             '  line 1  col 1  TestCase: Forced error test',
             '',
             '  ' + StripAnsi(LogSymbols.error) + '  1 error',
@@ -175,9 +86,9 @@ describe('GulpScssLintStylish()', function()
 
     it('return two stylish warnings', function()
     {
-        Assert.deepEqual(stylishResult('warning', 2), [
+        Assert.deepEqual(stylishResult(__filename, 'warning', 2), [
             '',
-            __filename,
+            FILE,
             '  line 1  col 1  TestCase: Forced warning test',
             '  line 2  col 2  TestCase: Forced warning test',
             '',
