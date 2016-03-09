@@ -1,6 +1,5 @@
 /**
- * confirge | gulpfile.js
- * file version: 0.00.002
+ * gulp-scss-lint-stylish | gulpfile.js
  */
 'use strict';
 
