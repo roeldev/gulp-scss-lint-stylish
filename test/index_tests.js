@@ -5,9 +5,7 @@
 
 var Assert              = require('assert');
 var GulpUtil            = require('gulp-util');
-// var GulpScssLint        = require('gulp-scss-lint');
 var GulpScssLintStylish = require('../lib/index.js');
-// var LogInterceptor      = require('log-interceptor');
 var LogSymbols          = require('log-symbols');
 var Path                = require('path');
 var StripAnsi           = GulpUtil.colors.stripColor;

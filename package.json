@@ -25,10 +25,10 @@
   },
   "dependencies": {
     "gulp-util": "^3.0.6",
+    "lodash": "^4.6.1",
     "log-symbols": "^1.0.2",
     "plur": "^2.1.2",
-    "text-table": "^0.2.0",
-    "underscore": "^1.8.3"
+    "text-table": "^0.2.0"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
