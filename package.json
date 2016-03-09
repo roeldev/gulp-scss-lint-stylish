@@ -26,6 +26,7 @@
   "dependencies": {
     "gulp-util": "^3.0.6",
     "log-symbols": "^1.0.2",
+    "plur": "^2.1.2",
     "text-table": "^0.2.0",
     "underscore": "^1.8.3"
   },
